@@ -1,9 +1,9 @@
 import { useState } from 'react'
+import { asset } from '../utils/asset'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const baseUrl = import.meta.env.BASE_URL
-  const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
 
   const navLinks = [
     { label: 'Começo', href: baseUrl },
