@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 const baseUrl = import.meta.env.BASE_URL
 const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
 
-// Array de skills atualizado com tipos (tech e soft)
 const skills = [
   { name: 'React', type: 'tech' },
   { name: 'Resolução de Problemas', type: 'soft' },
@@ -37,11 +36,11 @@ const qualifications = [
 ]
 
 const socialIcons = [
-  { src: asset('/assets/png/linkedin-ico.png'), href: '#' },
-  { src: asset('/assets/png/github-ico.png'), href: '#' },
+  { src: asset('/assets/png/linkedin-ico.png'), href: 'https://www.linkedin.com/in/octaviocrv' },
+  { src: asset('/assets/png/github-ico.png'), href: 'https://github.com/octaviocrv' },
   // { src: '/assets/png/twitter-ico.png', href: '#' },
   // { src: '/assets/png/yt-ico.png', href: '#' },
-  { src: asset('/assets/png/insta-ico.png'), href: '#', last: true },
+  { src: asset('/assets/png/insta-ico.png'), href: 'https://www.instagram.com/octaviocrv', last: true },
 ]
 
 
@@ -83,6 +82,25 @@ const IconWave = () => (
   </svg>
 )
 
+const IconWhatsapp = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M20.52 3.48A11.86 11.86 0 0 0 12.03 0C5.4 0 .02 5.38.02 12c0 2.11.55 4.16 1.6 5.97L0 24l6.2-1.6A11.96 11.96 0 0 0 12.02 24h.01C18.66 24 24 18.63 24 12c0-3.2-1.25-6.2-3.48-8.52zM12.03 21.9h-.01a9.9 9.9 0 0 1-5.03-1.38l-.36-.21-3.68.95.98-3.59-.23-.37A9.88 9.88 0 0 1 2.12 12c0-5.47 4.45-9.92 9.91-9.92 2.65 0 5.14 1.03 7 2.9a9.83 9.83 0 0 1 2.9 7c0 5.47-4.44 9.92-9.9 9.92zm5.43-7.44c-.3-.15-1.76-.87-2.04-.97-.27-.1-.47-.15-.67.15s-.76.97-.94 1.17c-.17.2-.35.22-.64.07-.3-.15-1.24-.46-2.37-1.46a8.92 8.92 0 0 1-1.64-2.03c-.17-.3-.02-.46.13-.61.13-.12.3-.32.44-.48.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.08-.79.37-.27.3-1.04 1.02-1.04 2.5 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.5.7.3 1.25.49 1.67.62.7.22 1.33.19 1.84.11.56-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.08-.12-.27-.2-.57-.35z" />
+  </svg>
+)
+
+const IconLinkedin = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M20.45 20.45h-3.56v-5.58c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.68H9.33V9h3.42v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.59 0 4.25 2.36 4.25 5.43v6.3zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z" />
+  </svg>
+)
+
+const IconEmail = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="2" y="5" width="20" height="14" rx="2" />
+    <path d="m2 7 10 7L22 7" />
+  </svg>
+)
+
 export default function Home() {
   return (
     <>
@@ -96,7 +114,7 @@ export default function Home() {
           <span className="home-hero__badge-icon" aria-hidden="true">
             <IconWave />
           </span>
-          <span>Desenvolvedor Front-End & Automação</span>
+          <span>Full Stack Developer</span>
         </div>
 
         <h1 className="heading-primary animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
@@ -126,6 +144,8 @@ export default function Home() {
             <a
               href={s.href}
               className={`home-hero__social-icon-link${s.last ? ' home-hero__social-icon-link--bd-none' : ''}`}
+              target="_blank"
+              rel="noreferrer"
             >
               <img src={s.src} alt="icon" className="home-hero__social-icon" />
             </a>
@@ -368,13 +388,13 @@ export default function Home() {
           <div className="contact__cards-container">
 
             <a
-              href="https://wa.me/5531999999999?text=Olá!%20Gostaria%20de%20falar%20sobre%20um%20projeto."
+              href="https://wa.me/5531989184698?text=Olá!%20Gostaria%20de%20falar%20sobre%20um%20projeto."
               target="_blank"
               rel="noreferrer"
               className="contact__card"
             >
               <div className="contact__card-icon whatsapp">
-                <i className="fab fa-whatsapp"></i> 
+                <IconWhatsapp />
               </div>
               <h3 className="contact__card-title">WhatsApp</h3>
               <p className="contact__card-desc">Me chame para um papo rápido e direto.</p>
@@ -382,13 +402,13 @@ export default function Home() {
             </a>
 
             <a
-              href="https://linkedin.com/in/seu-perfil"
+              href="https://www.linkedin.com/in/octaviocrv"
               target="_blank"
               rel="noreferrer"
               className="contact__card"
             >
               <div className="contact__card-icon linkedin">
-                <i className="fab fa-linkedin-in"></i>
+                <IconLinkedin />
               </div>
               <h3 className="contact__card-title">LinkedIn</h3>
               <p className="contact__card-desc">Acompanhe minha trajetória e conexões.</p>
@@ -396,11 +416,11 @@ export default function Home() {
             </a>
 
             <a
-              href="mailto:seuemail@gmail.com"
+              href="mailto:octavio.peregrino80@gmail.com"
               className="contact__card"
             >
               <div className="contact__card-icon email">
-                <i className="fas fa-envelope"></i>
+                <IconEmail />
               </div>
               <h3 className="contact__card-title">E-mail</h3>
               <p className="contact__card-desc">Para propostas e assuntos mais detalhados.</p>

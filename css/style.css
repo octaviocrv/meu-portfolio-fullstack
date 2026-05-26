@@ -1452,14 +1452,31 @@ textarea:focus {
   height: 6.5rem;
   border-radius: 50%;
   margin-bottom: 2.5rem;
-  font-size: 2.8rem;
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   transition: transform 0.3s ease, background 0.3s ease;
 }
 
+.contact__card-icon svg {
+  width: 3rem;
+  height: 3rem;
+  display: block;
+}
+
+.contact__card-icon.whatsapp {
+  color: #25d366;
+}
+
+.contact__card-icon.linkedin {
+  color: #0a66c2;
+}
+
+.contact__card-icon.email {
+  color: #ea4335;
+}
+
 .contact__card:hover .whatsapp {
-  background: #25D366;
+  background: #25d366;
   color: #fff;
   transform: scale(1.1);
 }
