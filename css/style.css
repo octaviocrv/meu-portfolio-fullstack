@@ -731,7 +731,7 @@ textarea:focus {
       rgba(0, 98, 185, 0.8),
       rgba(0, 98, 185, 0.8)
     ),
-    url(../../assets/svg/common-bg.svg);
+    url(/assets/svg/common-bg.svg);
   background-size: cover;
   background-position: center;
 }
@@ -1409,7 +1409,7 @@ textarea:focus {
       rgba(0, 98, 185, 0.8),
       rgba(0, 98, 185, 0.8)
     ),
-    url(../../assets/svg/common-bg.svg);
+    url(/assets/svg/common-bg.svg);
   background-size: cover;
   background-position: center;
 }

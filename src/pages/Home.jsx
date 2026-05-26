@@ -1,6 +1,10 @@
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { projectsData } from '../data/projects'
+import { Link } from 'react-router-dom'
+
+const baseUrl = import.meta.env.BASE_URL
+const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
 
 // Array de skills atualizado com tipos (tech e soft)
 const skills = [
@@ -23,21 +27,21 @@ const qualifications = [
   {
     degree: 'Bacharelado em Sistemas de Informação',
     institution: 'PUC Minas',
-    icon: '/assets/svg/pucminas.png',
+    icon: asset('/assets/svg/pucminas.png'),
   },
   {
     degree: 'Técnico em Desenvolvimento de Sistemas',
     institution: 'SENAI BH CECOTEG',
-    icon: '/assets/svg/senai.jpeg',
+    icon: asset('/assets/svg/senai.jpeg'),
   },
 ]
 
 const socialIcons = [
-  { src: '/assets/png/linkedin-ico.png', href: '#' },
-  { src: '/assets/png/github-ico.png', href: '#' },
+  { src: asset('/assets/png/linkedin-ico.png'), href: '#' },
+  { src: asset('/assets/png/github-ico.png'), href: '#' },
   // { src: '/assets/png/twitter-ico.png', href: '#' },
   // { src: '/assets/png/yt-ico.png', href: '#' },
-  { src: '/assets/png/insta-ico.png', href: '#', last: true },
+  { src: asset('/assets/png/insta-ico.png'), href: '#', last: true },
 ]
 
 
@@ -148,7 +152,7 @@ export default function Home() {
 
             <div className="about__photo-container">
               <img
-                src="/assets/jpeg/foto1.jpeg"
+                src={asset('/assets/jpeg/foto1.jpeg')}
                 alt="Foto de Octávio Augusto"
                 className="about__photo"
               />
@@ -275,9 +279,9 @@ export default function Home() {
                 )}
 
                 <div className="projects__featured-actions">
-                  <a href={`/project-${projectsData[0].id}`} className="projects__btn-primary">
+                  <Link to={`/project-${projectsData[0].id}`} className="projects__btn-primary">
                     Saber mais <IconArrow />
-                  </a>
+                  </Link>
                   {projectsData[0].isPrivate && (
                     <span className="projects__nda-note">
                       <IconLock /> Código privado (NDA)
@@ -342,9 +346,9 @@ export default function Home() {
                         <IconGithub />
                       </a>
                     )}
-                    <a href={`/project-${project.id}`} className="projects__more-link">
+                    <Link to={`/project-${project.id}`} className="projects__more-link">
                       Detalhes <IconArrow />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </article>

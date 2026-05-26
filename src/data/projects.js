@@ -1,4 +1,7 @@
 
+const baseUrl = import.meta.env.BASE_URL
+const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
+
 export const projectsData = [
   {
     id: 1,
@@ -40,7 +43,7 @@ export const projectsData = [
 
     tools: ['React', 'JavaScript', 'Node.js', 'Docker', 'Docker Compose', 'Nginx', 'MySQL', 'AWS S3', 'Material-UI', 'Git'],
 
-    image: '/assets/svg/terminal.png',
+    image: asset('/assets/svg/terminal.png'),
 
     status: 'Em Produção',
     client: 'Livraria Leitura',
@@ -55,7 +58,7 @@ export const projectsData = [
     shortDesc: 'Diagnóstico estratégico interativo que mapeia maturidade comercial e identifica gargalos de crescimento.',
     heroDesc:
       'Plataforma de diagnóstico empresarial que utiliza quiz personalizado para avaliar posicionamento de mercado, gerar análise estratégica e conectar empresas com soluções de crescimento.',
-    image: '/assets/svg/raioxcomercial.png',
+    image: asset('/assets/svg/raioxcomercial.png'),
     overview: [
       'Aplicação web interativa desenvolvida para a Sense House que permite empresas avaliarem sua maturidade comercial através de um questionário estratégico. O sistema analisa 8 dimensões críticas do negócio: posicionamento de mercado, reconhecimento de marca, geração de demanda, comunicação, estratégia de eventos, gargalos de crescimento e investimento em estruturação.',
       'A solução oferece três etapas principais: captura de dados corporativos com validação, quiz progressivo com feedback visual em tempo real, e relatório estratégico completo com score de maturidade, gap de crescimento e plano de ação personalizado. O design premium utiliza a identidade visual da marca com transições suaves e interface responsiva.',
@@ -70,7 +73,7 @@ export const projectsData = [
     shortDesc: 'Solução de preenchimento automático de formulários usando API ViaCEP para otimizar experiência do usuário.',
     heroDesc:
       'Aplicação web que integra a API ViaCEP para preencher automaticamente campos de endereço em tempo real, reduzindo erros de digitação e acelerando o processo de cadastro em até 80%.',
-    image: '/assets/svg/cep.png',
+    image: asset('/assets/svg/cep.png'),
     overview: [
       'Sistema desenvolvido para otimizar formulários de cadastro através da integração com a API pública ViaCEP. Ao digitar um CEP válido (8 dígitos), a aplicação realiza uma requisição assíncrona e preenche automaticamente os campos de logradouro, bairro, cidade e estado, proporcionando uma experiência fluida e livre de erros.',
       'A solução utiliza JavaScript vanilla com Fetch API para consumir dados em tempo real, implementa validação de CEP, tratamento de erros robusto para CEPs inexistentes, e feedback visual para o usuário durante o carregamento. O projeto demonstra boas práticas de desenvolvimento frontend, manipulação de DOM e consumo de APIs REST.',
@@ -85,7 +88,7 @@ export const projectsData = [
     shortDesc: 'Website institucional responsivo para escola infantil com foco em experiência do usuário e conversão de leads.',
     heroDesc:
       'Landing page completa desenvolvida para escola de educação infantil, apresentando serviços, valores educacionais e facilitando agendamento de visitas através de navegação intuitiva e design acolhedor.',
-    image: '/assets/svg/quintal.png',
+    image: asset('/assets/svg/quintal.png'),
     overview: [
       'Website institucional desenvolvido para o Quintal Voo Livre do Saber, escola de educação infantil que valoriza o desenvolvimento através da imaginação e das relações sociais. O projeto apresenta uma estrutura completa com seções estratégicas: hero section impactante com call-to-action, sobre a instituição, serviços oferecidos (cuidados, alimentação e diversão), depoimentos de pais e formulário de contato.',
       'A solução foi construída com HTML5 semântico, CSS3 moderno e JavaScript vanilla, implementando navegação smooth scroll, menu responsivo mobile-first, seções bem estruturadas e design acolhedor que reflete os valores da marca. O layout prioriza conversão através de CTAs estratégicos para agendamento de visitas, otimizando a jornada do usuário desde a descoberta até o contato.',
@@ -102,7 +105,7 @@ export const projectsData = [
     heroDesc:
       'Sistema web desenvolvido para simplificar a divisão de contas em grupos, permitindo criar mesas, adicionar itens consumidos e calcular automaticamente quanto cada participante deve pagar com precisão e clareza. Projeto está passando por um refactoring completo, logo mais vai estar disponível uma versão completa atualizada.',
 
-    image: '/assets/jpeg/divide-ja.png',
+    image: asset('/assets/jpeg/divide-ja.png'),
 
     overview: [
       'O Divide Já é uma aplicação web criada para resolver um problema comum no dia a dia: a dificuldade de dividir contas entre amigos de forma justa e sem confusão. A solução permite criar mesas virtuais, adicionar itens consumidos e associar cada item aos participantes, realizando o cálculo automático dos valores individuais.',
@@ -123,7 +126,7 @@ export const projectsData = [
     heroDesc:
       'Aplicação web desenvolvida para consumir a API pública RAWG e exibir um catálogo dinâmico de jogos, permitindo buscar títulos, visualizar detalhes e explorar informações sobre o universo gamer em tempo real.',
 
-    image: '/assets/jpeg/brasilgames.png',
+    image: asset('/assets/jpeg/brasilgames.png'),
 
     overview: [
       'O Game Catalog é uma aplicação web focada na exibição de dados reais sobre jogos digitais, consumindo diretamente a API pública RAWG. A aplicação permite listar jogos automaticamente, buscar títulos específicos e acessar páginas de detalhes com informações completas, como data de lançamento, avaliação e imagem de capa.',
@@ -144,7 +147,7 @@ export const projectsData = [
     heroDesc:
       'Plataforma de recepção inteligente baseada em voz, desenvolvida para empresas de marketing automatizarem o atendimento inicial, qualificação de leads e agendamentos, utilizando IA, fluxos orquestrados e integrações com ferramentas externas.',
 
-    image: '/assets/png/ia.png',
+    image: asset('/assets/png/ia.png'),
 
     overview: [
       'O AI Voice Receptionist é uma solução de automação de atendimento projetada para empresas de marketing que recebem alto volume de contatos. O sistema permite que clientes liguem diretamente para um número, onde são atendidos por uma IA capaz de entender, responder e conduzir a conversa de forma natural, reduzindo a necessidade de atendimento humano no primeiro contato.',

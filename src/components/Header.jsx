@@ -2,12 +2,14 @@ import { useState } from 'react'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const baseUrl = import.meta.env.BASE_URL
+  const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
 
   const navLinks = [
-    { label: 'Começo', href: '/' },
-    { label: 'Quem sou eu', href: '/#about' },
-    { label: 'O que eu construo', href: '/#projects' },
-    { label: 'Bora conversar', href: '/#contact' },
+    { label: 'Começo', href: baseUrl },
+    { label: 'Quem sou eu', href: `${baseUrl}#about` },
+    { label: 'O que eu construo', href: `${baseUrl}#projects` },
+    { label: 'Bora conversar', href: `${baseUrl}#contact` },
   ]
 
   const closeMenu = () => setMenuOpen(false)
@@ -15,10 +17,10 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header__content">
-        <div className="header__logo-container" onClick={() => (location.href = '/')}>
+        <div className="header__logo-container" onClick={() => (location.href = baseUrl)}>
           <div className="header__logo-img-cont">
             <img
-              src="/assets/jpeg/Me.jpeg"
+              src={asset('/assets/jpeg/Me.jpeg')}
               alt="Foto de Octávio Augusto"
               className="header__logo-img"
             />
@@ -42,12 +44,12 @@ export default function Header() {
             onClick={() => setMenuOpen(!menuOpen)}
           >
             <img
-              src="/assets/svg/ham-menu.svg"
+              src={asset('/assets/svg/ham-menu.svg')}
               alt="hamburger menu"
               className={`header__main-ham-menu${menuOpen ? ' d-none' : ''}`}
             />
             <img
-              src="/assets/svg/ham-menu-close.svg"
+              src={asset('/assets/svg/ham-menu-close.svg')}
               alt="hamburger menu close"
               className={`header__main-ham-menu-close${menuOpen ? '' : ' d-none'}`}
             />
