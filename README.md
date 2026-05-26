@@ -10,11 +10,3 @@
 ## Sobre o Projeto
 
 Este é o repositório do meu portfólio pessoal. O objetivo desta aplicação é centralizar e apresentar de forma clara as soluções que desenvolvo, destacando minhas habilidades na construção de interfaces web, arquitetura de componentes e design responsivo.
-
-## Como rodar o projeto localmente
-
-Para testar ou desenvolver na sua máquina, siga as instruções abaixo:
-
-**1. Clone este repositório:**
-```bash
-git clone [https://github.com/SEU_USUARIO/octavio-portfolio.git](https://github.com/SEU_USUARIO/octavio-portfolio.git)
