@@ -90,31 +90,34 @@ export default function ProjectDetail({ project }) {
                 </div>
               </div>
 
-              <div className="project-details__side-card">
-                <h3 className="project-details__content-title project-details__content-title--sm">Ações</h3>
-                <div className="project-details__links-container">
-                  {project.liveLink && (
-                    <a
-                      href={project.liveLink}
-                      className="btn btn--theme project-details__btn-full"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Acessar Aplicação &rarr;
-                    </a>
-                  )}
-                  {project.codeLink && (
-                    <a
-                      href={project.codeLink}
-                      className="btn btn--outline-dark project-details__btn-full"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Ver Código Fonte
-                    </a>
-                  )}
+              {/* Bloco de ações agora está condicionado */}
+              {(project.liveLink || project.codeLink) && (
+                <div className="project-details__side-card">
+                  <h3 className="project-details__content-title project-details__content-title--sm">Ações</h3>
+                  <div className="project-details__links-container">
+                    {project.liveLink && (
+                      <a
+                        href={project.liveLink}
+                        className="btn btn--theme project-details__btn-full"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Acessar Aplicação &rarr;
+                      </a>
+                    )}
+                    {project.codeLink && (
+                      <a
+                        href={project.codeLink}
+                        className="btn btn--outline-dark project-details__btn-full"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Ver Código Fonte
+                      </a>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
 
             </div>
           </div>

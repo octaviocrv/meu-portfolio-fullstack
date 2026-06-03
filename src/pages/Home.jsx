@@ -7,20 +7,24 @@ const baseUrl = import.meta.env.BASE_URL
 const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
 
 const skills = [
-  { name: 'React', type: 'tech' },
-  { name: 'Resolução de Problemas', type: 'soft' },
-  { name: 'TypeScript', type: 'tech' },
-  { name: 'Comunicação Clara', type: 'soft' },
   { name: 'JavaScript', type: 'tech' },
-  { name: 'Foco em Resultados', type: 'soft' },
+  { name: 'Resolução de Problemas', type: 'soft' },
+
+  { name: 'React', type: 'tech' },
+  { name: 'Comunicação Clara', type: 'soft' },
+
   { name: 'Node.js', type: 'tech' },
-  { name: 'Visão de Negócio', type: 'soft' },
-  { name: 'Next.js', type: 'tech' },
+  { name: 'Entrega no Prazo', type: 'soft' },
+
+  { name: 'REST APIs', type: 'tech' },
   { name: 'Adaptabilidade', type: 'soft' },
-  { name: 'Banco de Dados', type: 'tech' },
-  { name: 'C#', type: 'tech' },
-  { name: 'N8N / Integrações', type: 'tech' }
-]
+
+  { name: 'Automação', type: 'tech' },
+  { name: 'Integração de Sistemas', type: 'tech' },
+
+  { name: 'Landing Pages', type: 'tech' },
+  { name: 'Performance Web', type: 'tech' },
+];
 
 const qualifications = [
   {
@@ -108,55 +112,56 @@ export default function Home() {
 
       {/* HERO */}
       <section className="home-hero">
-      <div className="home-hero__content">
-        
-        <div className="home-hero__badge animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-          <span className="home-hero__badge-icon" aria-hidden="true">
-            <IconWave />
-          </span>
-          <span>Full Stack Developer</span>
-        </div>
+        <div className="home-hero__content">
 
-        <h1 className="heading-primary animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          Oi, eu sou o <span className="text-highlight">Octávio</span>
-        </h1>
-        
-        <div className="home-hero__info animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-          <p className="text-primary">
-            Ajudo empresas a escalar resultados transformando ideias em produtos digitais de alta performance. 
-            Desenvolvo interfaces modernas e construo automações que conectam necessidades de negócio a soluções práticas e eficientes.
-          </p>
-        </div>
-        
-        <div className="home-hero__cta animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-          <a href="#projects" className="btn btn--theme home-hero__cta-btn">
-            Ver Projetos
-          </a>
-          <a href="#contact" className="btn btn--outline home-hero__cta-btn">
-            Entrar em Contato
-          </a>
-        </div>
-      </div>
+          <div className="home-hero__badge animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <span className="home-hero__badge-icon" aria-hidden="true">
+              <IconWave />
+            </span>
+            <span>Full Stack Developer</span>
+          </div>
 
-      <div className="home-hero__socials animate-fade-in-right">
-        {socialIcons.map((s, i) => (
-          <div key={i} className="home-hero__social">
-            <a
-              href={s.href}
-              className={`home-hero__social-icon-link${s.last ? ' home-hero__social-icon-link--bd-none' : ''}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img src={s.src} alt="icon" className="home-hero__social-icon" />
+          <h1 className="heading-primary animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            Oi, eu sou o <span className="text-highlight">Octávio</span>
+          </h1>
+
+          <div className="home-hero__info animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <p className="text-primary">
+              Desenvolvedor de Sistemas Jr. com foco em aplicações web, automações e integração com APIs.
+              Ajudo empresas a escalar resultados transformando ideias em produtos digitais de alta performance.
+              Desenvolvo interfaces modernas e construo automações que conectam necessidades de negócio a soluções práticas e eficientes.
+            </p>
+          </div>
+
+          <div className="home-hero__cta animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            <a href="#projects" className="btn btn--theme home-hero__cta-btn">
+              Ver Projetos
+            </a>
+            <a href="#contact" className="btn btn--outline home-hero__cta-btn">
+              Entrar em Contato
             </a>
           </div>
-        ))}
-      </div>
+        </div>
 
-      <div className="home-hero__mouse-scroll-cont">
-        <div className="mouse"></div>
-      </div>
-    </section>
+        <div className="home-hero__socials animate-fade-in-right">
+          {socialIcons.map((s, i) => (
+            <div key={i} className="home-hero__social">
+              <a
+                href={s.href}
+                className={`home-hero__social-icon-link${s.last ? ' home-hero__social-icon-link--bd-none' : ''}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src={s.src} alt="icon" className="home-hero__social-icon" />
+              </a>
+            </div>
+          ))}
+        </div>
+
+        <div className="home-hero__mouse-scroll-cont">
+          <div className="mouse"></div>
+        </div>
+      </section>
 
       {/* ABOUT */}
       <section id="about" className="about sec-pad">
@@ -183,14 +188,15 @@ export default function Home() {
                 <h3 className="about__content-title">Muito prazer!</h3>
                 <div className="about__content-details">
                   <p className="about__content-details-para">
-                    Sou um <strong>problema-solver</strong> e busco sempre transformar
-                    problemas em soluções digitais. Tenho sólida experiência de sistemas legados
-                    e entendo como conectar regras de negócio a interfaces que realmente funcionam.
+                    Sou um <strong>resolvedor de problemas</strong> e busco sempre transformar desafios em soluções digitais. Com base em Belo Horizonte (MG), tenho sólida experiência em desenvolvimento/integrações e entendo como conectar regras de negócio a interfaces que realmente funcionam. Possuo projetos próprios desenvolvidos desde o MVP até a implementação.
                   </p>
+
                   <p className="about__content-details-para">
-                    Além do desenvolvimento web tradicional, também crio integrações e automações
-                    utilizando ferramentas para otimizar processos. Sinta-se à vontade
-                    para entrar em <strong>contato</strong> comigo.
+                    Além do desenvolvimento web tradicional, também crio integrações e automações utilizando ferramentas para otimizar processos.
+                  </p>
+
+                  <p className="about__content-details-para">
+                    Sinta-se à vontade para entrar em <strong>contato</strong> comigo.
                   </p>
                 </div>
                 <a href="#contact" className="btn btn--med btn--theme dynamicBgClr">
@@ -199,7 +205,7 @@ export default function Home() {
               </div>
 
               <div className="about__content-skills" style={{ marginTop: '6rem' }}>
-                <h3 className="about__content-title">Minhas Habilidades</h3>
+                <h3 className="about__content-title">Habilidades & Tecnologias</h3>
 
                 {/* SKILLS */}
                 <div className="skills">
@@ -233,6 +239,24 @@ export default function Home() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              <div className="about__content-qualifications" style={{ marginTop: '4rem' }}>
+                <h3 className="about__content-title">Idiomas</h3>
+                <div className="qualifications">
+                  <div className="qualifications__item">
+                    <img
+                      src="assets/png/estados-unidos.png"
+                      alt="Ícone idioma Inglês"
+                      className="qualifications__icon"
+                      loading="lazy"
+                    />
+                    <div className="qualifications__text">
+                      <p className="qualifications__degree">Inglês</p>
+                      <p className="qualifications__institution">B2 - Intermediário Superior</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

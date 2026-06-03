@@ -2,11 +2,11 @@ const baseUrl = import.meta.env.BASE_URL
 const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
 
 const socialLinks = [
-  { icon: asset('/assets/png/linkedin-ico.png'), href: '#' },
-  { icon: asset('/assets/png/github-ico.png'), href: '#' },
+  { icon: asset('/assets/png/linkedin-ico.png'), href: 'https://www.linkedin.com/in/octaviocrv' },
+  { icon: asset('/assets/png/github-ico.png'), href: 'https://github.com/octaviocrv' },
   // { icon: '/assets/png/twitter-ico.png', href: '#' },
   // { icon: '/assets/png/yt-ico.png', href: '#' },
-  { icon: asset('/assets/png/insta-ico.png'), href: '#', last: true },
+  { icon: asset('/assets/png/insta-ico.png'), href: 'https://www.instagram.com/octaviocrv', last: true },
 ]
 
 export default function Footer() {

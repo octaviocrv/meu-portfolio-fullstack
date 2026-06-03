@@ -1,4 +1,3 @@
-
 const baseUrl = import.meta.env.BASE_URL
 const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
 
@@ -47,7 +46,7 @@ export const projectsData = [
 
     status: 'Em Produção',
     client: 'Livraria Leitura',
-    codeLink: '#', // Privado
+    codeLink: '#',
     liveLink: '#',
     isPrivate: true,
     privateNote: 'Código-fonte privado (NDA). Detalhes arquiteturais e snippets disponíveis sob solicitação.',
@@ -68,78 +67,6 @@ export const projectsData = [
     codeLink: 'https://github.com/octaviocrv/diagnostico-vendas',
   },
   {
-    id: 3,
-    title: 'Integração API ViaCEP - Autocompletar Endereços',
-    shortDesc: 'Solução de preenchimento automático de formulários usando API ViaCEP para otimizar experiência do usuário.',
-    heroDesc:
-      'Aplicação web que integra a API ViaCEP para preencher automaticamente campos de endereço em tempo real, reduzindo erros de digitação e acelerando o processo de cadastro em até 80%.',
-    image: asset('/assets/svg/cep.png'),
-    overview: [
-      'Sistema desenvolvido para otimizar formulários de cadastro através da integração com a API pública ViaCEP. Ao digitar um CEP válido (8 dígitos), a aplicação realiza uma requisição assíncrona e preenche automaticamente os campos de logradouro, bairro, cidade e estado, proporcionando uma experiência fluida e livre de erros.',
-      'A solução utiliza JavaScript vanilla com Fetch API para consumir dados em tempo real, implementa validação de CEP, tratamento de erros robusto para CEPs inexistentes, e feedback visual para o usuário durante o carregamento. O projeto demonstra boas práticas de desenvolvimento frontend, manipulação de DOM e consumo de APIs REST.',
-    ],
-    tools: ['HTML5', 'CSS3', 'JavaScript', 'Fetch API', 'ViaCEP API', 'Git'],
-    liveLink: 'https://octaviocrv.github.io/authcomplet-viacep/',
-    codeLink: 'https://github.com/octaviocrv/authcomplet-viacep',
-  },
-  {
-    id: 4,
-    title: 'Quintal Voo Livre do Saber - Website Institucional',
-    shortDesc: 'Website institucional responsivo para escola infantil com foco em experiência do usuário e conversão de leads.',
-    heroDesc:
-      'Landing page completa desenvolvida para escola de educação infantil, apresentando serviços, valores educacionais e facilitando agendamento de visitas através de navegação intuitiva e design acolhedor.',
-    image: asset('/assets/svg/quintal.png'),
-    overview: [
-      'Website institucional desenvolvido para o Quintal Voo Livre do Saber, escola de educação infantil que valoriza o desenvolvimento através da imaginação e das relações sociais. O projeto apresenta uma estrutura completa com seções estratégicas: hero section impactante com call-to-action, sobre a instituição, serviços oferecidos (cuidados, alimentação e diversão), depoimentos de pais e formulário de contato.',
-      'A solução foi construída com HTML5 semântico, CSS3 moderno e JavaScript vanilla, implementando navegação smooth scroll, menu responsivo mobile-first, seções bem estruturadas e design acolhedor que reflete os valores da marca. O layout prioriza conversão através de CTAs estratégicos para agendamento de visitas, otimizando a jornada do usuário desde a descoberta até o contato.',
-    ],
-    tools: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design', 'Git', 'GitHub Pages'],
-    liveLink: 'https://octaviocrv.github.io/My-first-project---QuintalVooLivre/',
-    codeLink: 'https://github.com/octaviocrv/My-first-project---QuintalVooLivre',
-  },
-  {
-    id: 5,
-    title: 'Divide Já • Divisão de Contas',
-    shortDesc: 'Aplicação web para divisão inteligente de contas entre amigos, permitindo gerenciar mesas, itens e valores individuais de forma automática e transparente.',
-
-    heroDesc:
-      'Sistema web desenvolvido para simplificar a divisão de contas em grupos, permitindo criar mesas, adicionar itens consumidos e calcular automaticamente quanto cada participante deve pagar com precisão e clareza. Projeto está passando por um refactoring completo, logo mais vai estar disponível uma versão completa atualizada.',
-
-    image: asset('/assets/jpeg/divide-ja.png'),
-
-    overview: [
-      'O Divide Já é uma aplicação web criada para resolver um problema comum no dia a dia: a dificuldade de dividir contas entre amigos de forma justa e sem confusão. A solução permite criar mesas virtuais, adicionar itens consumidos e associar cada item aos participantes, realizando o cálculo automático dos valores individuais.',
-
-      'A aplicação foi desenvolvida com foco em usabilidade e organização de estado, lidando com cenários como divisão parcial de itens, múltiplos participantes e atualização dinâmica dos valores. A interface foi projetada para ser simples e intuitiva, reduzindo atrito na experiência do usuário e tornando o processo de divisão rápido e transparente.'
-    ],
-
-    tools: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Git', 'GitHub'],
-
-    liveLink: 'https://octaviocrv.github.io/divide-ja/src/pages/login/index.html',
-    codeLink: 'https://github.com/octaviocrv/divide-ja',
-  },
-  {
-    id: 6,
-    title: 'Game Catalog • RAWG API',
-    shortDesc: 'Aplicação web para exploração de jogos utilizando dados em tempo real da API RAWG, com busca, listagem dinâmica e páginas de detalhamento.',
-
-    heroDesc:
-      'Aplicação web desenvolvida para consumir a API pública RAWG e exibir um catálogo dinâmico de jogos, permitindo buscar títulos, visualizar detalhes e explorar informações sobre o universo gamer em tempo real.',
-
-    image: asset('/assets/jpeg/brasilgames.png'),
-
-    overview: [
-      'O Game Catalog é uma aplicação web focada na exibição de dados reais sobre jogos digitais, consumindo diretamente a API pública RAWG. A aplicação permite listar jogos automaticamente, buscar títulos específicos e acessar páginas de detalhes com informações completas, como data de lançamento, avaliação e imagem de capa.',
-
-      'O projeto demonstra domínio na integração com APIs REST, manipulação dinâmica do DOM e controle de navegação via parâmetros de URL. A lógica envolve múltiplas requisições assíncronas, tratamento de dados retornados e renderização dinâmica da interface, garantindo uma experiência fluida e responsiva para o usuário.'
-    ],
-
-    tools: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Fetch API', 'REST API', 'Git', 'GitHub'],
-
-    liveLink: 'https://octaviocrv.github.io/game-catalog-rawg-api/',
-    codeLink: 'https://github.com/octaviocrv/game-catalog-rawg-api',
-  },
-  {
     id: 7,
     title: 'AI Voice Receptionist • Automação de Atendimento',
     shortDesc: 'Sistema de atendimento por voz com IA para empresas de marketing, automatizando ligações, qualificação de leads e agendamentos.',
@@ -147,7 +74,7 @@ export const projectsData = [
     heroDesc:
       'Plataforma de recepção inteligente baseada em voz, desenvolvida para empresas de marketing automatizarem o atendimento inicial, qualificação de leads e agendamentos, utilizando IA, fluxos orquestrados e integrações com ferramentas externas.',
 
-    image: asset('/assets/png/ia.png'),
+    image: asset('/assets/jpeg/chatbot.jpg'),
 
     overview: [
       'O AI Voice Receptionist é uma solução de automação de atendimento projetada para empresas de marketing que recebem alto volume de contatos. O sistema permite que clientes liguem diretamente para um número, onde são atendidos por uma IA capaz de entender, responder e conduzir a conversa de forma natural, reduzindo a necessidade de atendimento humano no primeiro contato.',
@@ -179,9 +106,173 @@ export const projectsData = [
     codeLink: '#',
     isPrivate: true,
     privateNote: 'Código-fonte privado (NDA). O projeto utiliza credenciais de conexão e integrações sensíveis que não podem ser expostas publicamente.',
+  },
+  {
+    id: 4,
+    title: 'Quintal Voo Livre do Saber - Website Institucional',
+    shortDesc: 'Website institucional responsivo para escola infantil com foco em experiência do usuário e conversão de leads.',
+    heroDesc:
+      'Landing page completa desenvolvida para escola de educação infantil, apresentando serviços, valores educacionais e facilitando agendamento de visitas através de navegação intuitiva e design acolhedor.',
+    image: asset('/assets/svg/quintal.png'),
+    overview: [
+      'Website institucional desenvolvido para o Quintal Voo Livre do Saber, escola de educação infantil que valoriza o desenvolvimento através da imaginação e das relações sociais. O projeto apresenta uma estrutura completa com seções estratégicas: hero section impactante com call-to-action, sobre a instituição, serviços oferecidos (cuidados, alimentação e diversão), depoimentos de pais e formulário de contato.',
+      'A solução foi construída com HTML5 semântico, CSS3 moderno e JavaScript vanilla, implementando navegação smooth scroll, menu responsivo mobile-first, seções bem estruturadas e design acolhedor que reflete os valores da marca. O layout prioriza conversão através de CTAs estratégicos para agendamento de visitas, otimizando a jornada do usuário desde a descoberta até o contato.',
+    ],
+    tools: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design', 'Git', 'GitHub Pages'],
+    liveLink: 'https://octaviocrv.github.io/My-first-project---QuintalVooLivre/',
+    codeLink: 'https://github.com/octaviocrv/My-first-project---QuintalVooLivre',
+  },
+  {
+    id: 8,
+    title: 'Automação WhatsApp & IA • Planads',
+    shortDesc: 'Fluxo avançado no n8n integrando disparos inteligentes via WhatsApp, processamento de IA e gestão de leads no Pipedrive.',
+
+    heroDesc:
+      'Arquitetura de automação desenvolvida no n8n para a Planads, conectando interações de inteligência artificial no WhatsApp diretamente ao funil de vendas do Pipedrive para qualificação de leads em tempo real.',
+
+    image: asset('/assets/jpeg/foto12.jpg'),
+
+    overview: [
+      'O projeto consiste em um fluxo complexo de automação que intercepta mensagens, processa a intenção do usuário utilizando IA e gerencia as informações diretamente no CRM (Pipedrive). Ele engloba os fluxos de "IA DISPARA Whatsapp" e as rotinas de interação com a assistente virtual.',
+      'Esta integração demonstra domínio em manipulação de Webhooks, chamadas de API RESTful, tratamento de payloads JSON e orquestração de microsserviços no n8n. O resultado é a redução drástica de trabalho manual da equipe comercial e o aumento na velocidade de atendimento e conversão de leads.',
+      'Trata-se de uma infraestrutura de backend e inteligência artificial desenvolvida especificamente para as operações da Planads. Devido à presença de dados sensíveis de leads e lógicas de negócios proprietárias, a arquitetura interna opera 100% nos bastidores.'
+    ],
+
+    tools: ['n8n', 'Pipedrive CRM', 'WhatsApp API', 'Webhooks', 'REST API', 'JavaScript', 'JSON'],
+
+    status: 'Em Produção',
+    client: 'Planads',
+    isPrivate: true,
+    privateNote: 'Sistema interno e proprietário. O fluxo lida com dados sensíveis de leads e inteligência comercial da agência.'
+  },
+  {
+    id: 3,
+    title: 'Integração API ViaCEP - Autocompletar Endereços',
+    shortDesc: 'Solução de preenchimento automático de formulários usando API ViaCEP para otimizar experiência do usuário.',
+    heroDesc:
+      'Aplicação web que integra a API ViaCEP para preencher automaticamente campos de endereço em tempo real, reduzindo erros de digitação e acelerando o processo de cadastro em até 80%.',
+    image: asset('/assets/svg/cep.png'),
+    overview: [
+      'Sistema desenvolvido para otimizar formulários de cadastro através da integração com a API pública ViaCEP. Ao digitar um CEP válido (8 dígitos), a aplicação realiza uma requisição assíncrona e preenche automaticamente os campos de logradouro, bairro, cidade e estado, proporcionando uma experiência fluida e livre de erros.',
+      'A solução utiliza JavaScript vanilla com Fetch API para consumir dados em tempo real, implementa validação de CEP, tratamento de erros robusto para CEPs inexistentes, e feedback visual para o usuário durante o carregamento. O projeto demonstra boas práticas de desenvolvimento frontend, manipulação de DOM e consumo de APIs REST.',
+    ],
+    tools: ['HTML5', 'CSS3', 'JavaScript', 'Fetch API', 'ViaCEP API', 'Git'],
+    liveLink: 'https://octaviocrv.github.io/authcomplet-viacep/',
+    codeLink: 'https://github.com/octaviocrv/authcomplet-viacep',
+  },
+  {
+    id: 9,
+    title: 'Funil de Vendas Webinar • V8',
+    shortDesc: 'Ecossistema de integrações para rastreamento de VSL, captação de leads e processamento de vendas via Kiwify.',
+
+    heroDesc:
+      'Orquestração de ponta a ponta desenvolvida no n8n para o lançamento do Webinar V8, automatizando desde o comportamento de visualização da VSL até o fluxo de vendas e aprovação de pagamentos.',
+
+    image: asset('/assets/jpeg/foto13.jpg'),
+
+    overview: [
+      'Este projeto consolida múltiplos fluxos (Fluxo Principal, VSL | Rastreio e Kiwify | Vendas). A automação captura os dados de engajamento do usuário durante o vídeo de vendas (VSL) e, de acordo com o comportamento e os eventos de compra recebidos via webhook da Kiwify, atualiza o status do cliente.',
+      'A lógica envolve roteamento condicional avançado, sincronização de dados entre plataformas de pagamento e CRM, além de automação de processos críticos de negócio (como recuperação de carrinho e onboarding de novos clientes). É um case forte de otimização de infraestrutura de vendas digitais.',
+      'Este ecossistema de integrações roda inteiramente no backend. Por se tratar de um funil de vendas ativo, contendo regras de negócio confidenciais e webhooks de pagamento reais, a infraestrutura é mantida sob sigilo absoluto.'
+    ],
+
+    tools: ['n8n', 'Kiwify API', 'Webhooks', 'Integração de CRM', 'Lógica Condicional', 'Data Mapping'],
+
+    status: 'Em Produção',
+    client: 'Comercial V8',
+    isPrivate: true,
+    privateNote: 'Automação de backend privada. Contém regras de negócio confidenciais e integrações diretas com plataformas de pagamento.'
+  },
+  {
+    id: 6,
+    title: 'Game Catalog • RAWG API',
+    shortDesc: 'Aplicação web para exploração de jogos utilizando dados em tempo real da API RAWG, com busca, listagem dinâmica e páginas de detalhamento.',
+
+    heroDesc:
+      'Aplicação web desenvolvida para consumir a API pública RAWG e exibir um catálogo dinâmico de jogos, permitindo buscar títulos, visualizar detalhes e explorar informações sobre o universo gamer em tempo real.',
+
+    image: asset('/assets/jpeg/brasilgames.png'),
+
+    overview: [
+      'O Game Catalog é uma aplicação web focada na exibição de dados reais sobre jogos digitais, consumindo diretamente a API pública RAWG. A aplicação permite listar jogos automaticamente, buscar títulos específicos e acessar páginas de detalhes com informações completas, como data de lançamento, avaliação e imagem de capa.',
+
+      'O projeto demonstra domínio na integração com APIs REST, manipulação dinâmica do DOM e controle de navegação via parâmetros de URL. A lógica envolve múltiplas requisições assíncronas, tratamento de dados retornados e renderização dinâmica da interface, garantindo uma experiência fluida e responsiva para o usuário.'
+    ],
+
+    tools: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Fetch API', 'REST API', 'Git', 'GitHub'],
+
+    liveLink: 'https://octaviocrv.github.io/game-catalog-rawg-api/',
+    codeLink: 'https://github.com/octaviocrv/game-catalog-rawg-api',
+  },
+  {
+    id: 10,
+    title: 'Lançamento • Funil de Vendas Automatizado',
+    shortDesc: 'Ecossistema de integrações para rastreamento de VSL, captação de leads e processamento de vendas via Kiwify.',
+
+    heroDesc:
+      'Orquestração de ponta a ponta desenvolvida no n8n para o lançamento do Webinar V8, automatizando desde o comportamento de visualização da VSL até o fluxo de vendas e aprovação de pagamentos.',
+
+    image: asset('/assets/jpeg/PEIXE.png'),
+
+    overview: [
+      'Este projeto consolida múltiplos fluxos (Fluxo Principal, VSL | Rastreio e Kiwify | Vendas). A automação captura os dados de engajamento do usuário durante o vídeo de vendas (VSL) e, de acordo com o comportamento e os eventos de compra recebidos via webhook da Kiwify, atualiza o status do cliente.',
+      'A lógica envolve roteamento condicional avançado, sincronização de dados entre plataformas de pagamento e CRM, além de automação de processos críticos de negócio (como recuperação de carrinho e onboarding de novos clientes). É um case forte de otimização de infraestrutura de vendas digitais.'
+    ],
+
+    tools: ['n8n', 'Kiwify API', 'Webhooks', 'Integração de CRM', 'Lógica Condicional', 'Data Mapping'],
+
+    liveLink: 'https://planads.com.br/implementacao/comercial-v8/',
+  },
+  {
+    id: 5,
+    title: 'Divide Já • Divisão de Contas',
+    shortDesc: 'Aplicação web para divisão inteligente de contas entre amigos, permitindo gerenciar mesas, itens e valores individuais de forma automática e transparente.',
+
+    heroDesc:
+      'Sistema web desenvolvido para simplificar a divisão de contas em grupos, permitindo criar mesas, adicionar itens consumidos e calcular automaticamente quanto cada participante deve pagar com precisão e clareza. Projeto está passando por um refactoring completo, logo mais vai estar disponível uma versão completa atualizada.',
+
+    image: asset('/assets/jpeg/divide-ja.png'),
+
+    overview: [
+      'O Divide Já é uma aplicação web criada para resolver um problema comum no dia a dia: a dificuldade de dividir contas entre amigos de forma justa e sem confusão. A solução permite criar mesas virtuais, adicionar itens consumidos e associar cada item aos participantes, realizando o cálculo automático dos valores individuais.',
+
+      'A aplicação foi desenvolvida com foco em usabilidade e organização de estado, lidando com cenários como divisão parcial de itens, múltiplos participantes e atualização dinâmica dos valores. A interface foi projetada para ser simples e intuitiva, reduzindo atrito na experiência do usuário e tornando o processo de divisão rápido e transparente.'
+    ],
+
+    tools: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Git', 'GitHub'],
+
+    liveLink: 'https://octaviocrv.github.io/divide-ja/src/pages/login/index.html',
+    codeLink: 'https://github.com/octaviocrv/divide-ja',
+  },
+  {
+    id: 11,
+    title: 'Arquitetura e Implementação de CRM • Multi-Nicho',
+    shortDesc: 'Estruturação completa, integração e automação avançada de CRMs (Pipedrive, Kommo) para otimização de processos comerciais.',
+
+    heroDesc:
+      'Desenvolvimento e implementação de ecossistemas completos de CRM para agências de marketing, administradoras de consórcios e outras operações de vendas. O foco foi estruturar processos comerciais complexos, automatizar cadências de follow-up e integrar múltiplos canais de captação.',
+
+    image: asset('/assets/jpeg/CRM2.jpg'),
+
+    overview: [
+      'A estruturação engloba a configuração de ponta a ponta em plataformas como Pipedrive e Kommo. O trabalho iniciou com o mapeamento e desenho do processo comercial, evoluindo para a criação de funis de vendas hiper-personalizados, definição de campos customizados, motivos de perda e regras de transição de etapas para garantir a governança dos dados.',
+      'O núcleo técnico do projeto envolve a automação massiva de rotinas operacionais. Utilizando n8n, webhooks e APIs RESTful, a arquitetura orquestra a captação de leads em tempo real, roteamento inteligente para corretores/vendedores, criação automática de atividades (tarefas/ligações) e disparos de mensagens transacionais em ferramentas de mensageria.',
+      'Por gerenciar o coração das vendas de diferentes empresas — envolvendo bases ativas de clientes, inteligência comercial, faturamento e estratégias de conversão —, a infraestrutura interna e os diagramas de processo são mantidos sob acordos de confidencialidade.'
+    ],
+
+    tools: [
+      'Pipedrive CRM',
+      'Kommo',
+      'n8n',
+      'Webhooks',
+      'REST API',
+      'Mapeamento de Processos',
+      'Automação de Vendas'
+    ],
+
+    status: 'Em Produção',
+    client: 'Múltiplos Clientes (Marketing, Consórcios, etc.)',
+    isPrivate: true,
+    privateNote: 'Infraestrutura interna e restrita. O projeto gerencia bancos de dados de leads, fluxos operacionais privados e estratégias comerciais sob NDA.',
   }
-
-
-
-
 ]

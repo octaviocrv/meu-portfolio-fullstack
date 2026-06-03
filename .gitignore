@@ -126,3 +126,5 @@ dist
 
 # Extensoes locais
 .claude/
+
+.npmrc
