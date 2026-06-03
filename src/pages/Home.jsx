@@ -247,7 +247,7 @@ export default function Home() {
                 <div className="qualifications">
                   <div className="qualifications__item">
                     <img
-                      src="assets/png/estados-unidos.png"
+                      src={asset('/assets/png/estados-unidos.png')}
                       alt="Ícone idioma Inglês"
                       className="qualifications__icon"
                       loading="lazy"
