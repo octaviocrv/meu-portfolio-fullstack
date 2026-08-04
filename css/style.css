@@ -237,11 +237,11 @@ textarea:focus {
 }
 
 .header__logo-img-cont {
-  width: 5rem;
-  height: 5rem;
+  width: 5.8rem;
+  height: 5.8rem;
   margin-right: 1.5rem;
   background: #0062b9;
-  border-radius: 50px;
+  border-radius: 50%;
   overflow: hidden;
 }
 
@@ -249,8 +249,9 @@ textarea:focus {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
+  transform: translateY(2.0rem) scale(1.89);
 }
 
 .header__logo-sub {
@@ -582,7 +583,8 @@ textarea:focus {
   max-width: 400px;
   height: auto;
   border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  background: transparent;
+  box-shadow: none;
   object-fit: cover;
 }
 

@@ -177,10 +177,48 @@ export default function Home() {
 
             <div className="about__photo-container">
               <img
-                src={asset('/assets/jpeg/foto1.jpeg')}
+                src={asset('/assets/svg/eu-fund-branco-de-preto.svg')}
                 alt="Foto de Octávio Augusto"
                 className="about__photo"
               />
+
+              <div className="about__content-qualifications" style={{ marginTop: '4rem' }}>
+                <h3 className="about__content-title">Formação Acadêmica</h3>
+                <div className="qualifications">
+                  {qualifications.map((qual) => (
+                    <div key={qual.institution} className="qualifications__item">
+                      <img
+                        src={qual.icon}
+                        alt={`Logo ${qual.institution}`}
+                        className="qualifications__icon"
+                        loading="lazy"
+                      />
+                      <div className="qualifications__text">
+                        <p className="qualifications__degree">{qual.degree}</p>
+                        <p className="qualifications__institution">{qual.institution}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="about__content-qualifications" style={{ marginTop: '4rem' }}>
+                <h3 className="about__content-title">Idiomas</h3>
+                <div className="qualifications">
+                  <div className="qualifications__item">
+                    <img
+                      src={asset('/assets/png/estados-unidos.png')}
+                      alt="Ícone idioma Inglês"
+                      className="qualifications__icon"
+                      loading="lazy"
+                    />
+                    <div className="qualifications__text">
+                      <p className="qualifications__degree">Inglês</p>
+                      <p className="qualifications__institution">B2 - Intermediário Superior</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="about__info-container">
@@ -222,43 +260,6 @@ export default function Home() {
 
               </div>
 
-              <div className="about__content-qualifications" style={{ marginTop: '4rem' }}>
-                <h3 className="about__content-title">Formação Acadêmica</h3>
-                <div className="qualifications">
-                  {qualifications.map((qual) => (
-                    <div key={qual.institution} className="qualifications__item">
-                      <img
-                        src={qual.icon}
-                        alt={`Logo ${qual.institution}`}
-                        className="qualifications__icon"
-                        loading="lazy"
-                      />
-                      <div className="qualifications__text">
-                        <p className="qualifications__degree">{qual.degree}</p>
-                        <p className="qualifications__institution">{qual.institution}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="about__content-qualifications" style={{ marginTop: '4rem' }}>
-                <h3 className="about__content-title">Idiomas</h3>
-                <div className="qualifications">
-                  <div className="qualifications__item">
-                    <img
-                      src={asset('/assets/png/estados-unidos.png')}
-                      alt="Ícone idioma Inglês"
-                      className="qualifications__icon"
-                      loading="lazy"
-                    />
-                    <div className="qualifications__text">
-                      <p className="qualifications__degree">Inglês</p>
-                      <p className="qualifications__institution">B2 - Intermediário Superior</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

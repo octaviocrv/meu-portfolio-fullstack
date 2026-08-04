@@ -128,3 +128,6 @@ dist
 .claude/
 
 .npmrc
+# Core dumps
+core
+core.*
