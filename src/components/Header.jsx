@@ -20,7 +20,7 @@ export default function Header() {
         <div className="header__logo-container" onClick={() => (location.href = baseUrl)}>
           <div className="header__logo-img-cont">
             <img
-              src={asset('/assets/jpeg/Me.jpeg')}
+              src={asset('/assets/svg/eu-sorrindo.svg')}
               alt="Foto de Octávio Augusto"
               className="header__logo-img"
             />
