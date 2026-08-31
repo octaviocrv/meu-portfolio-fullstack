@@ -2,7 +2,6 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { projectsData } from '../data/projects'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 
 const baseUrl = import.meta.env.BASE_URL
 const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
@@ -48,13 +47,6 @@ const socialIcons = [
   { src: asset('/assets/png/insta-ico.png'), href: 'https://www.instagram.com/octaviocrv', last: true },
 ]
 
-const aboutCarouselPhotos = [
-  asset('/assets/svg/eu-fund-branco-de-preto.svg'),
-  asset('/assets/svg/eu-fundo-branco-cruzado-preto.svg'),
-]
-
-const ABOUT_CAROUSEL_INTERVAL_MS = 10000
-
 
 const IconExternal = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -86,24 +78,11 @@ const IconCheck = () => (
   </svg>
 )
 
-const IconLaptop = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <rect x="3" y="4" width="18" height="12" rx="1.6" stroke="currentColor" strokeWidth="2" />
-    <path
-      d="M2.4 18.4h19.2l-1.1 1.9a1.6 1.6 0 0 1-1.38.8H4.88a1.6 1.6 0 0 1-1.38-.8l-1.1-1.9z"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinejoin="round"
-    />
-    <path
-      className="badge-icon__code"
-      d="M8.6 8.3 6.4 10l2.2 1.7M15.4 8.3l2.2 1.7-2.2 1.7"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <rect className="badge-icon__cursor" x="11.3" y="9" width="1.4" height="3.4" rx="0.4" fill="currentColor" />
+const IconWave = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M8 11V5a2 2 0 1 1 4 0v6" />
+    <path d="M12 11V4a2 2 0 1 1 4 0v7" />
+    <path d="M16 11V6a2 2 0 1 1 4 0v8c0 3.3-2.7 6-6 6h-2.2a6 6 0 0 1-5-2.7L4 13.5a2 2 0 1 1 3.2-2.4L8 12" />
   </svg>
 )
 
@@ -127,16 +106,6 @@ const IconEmail = () => (
 )
 
 export default function Home() {
-  const [aboutPhotoIndex, setAboutPhotoIndex] = useState(0)
-
-  useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      setAboutPhotoIndex((prev) => (prev + 1) % aboutCarouselPhotos.length)
-    }, ABOUT_CAROUSEL_INTERVAL_MS)
-
-    return () => window.clearInterval(intervalId)
-  }, [])
-
   return (
     <>
       <Header />
@@ -147,7 +116,7 @@ export default function Home() {
 
           <div className="home-hero__badge animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <span className="home-hero__badge-icon" aria-hidden="true">
-              <IconLaptop />
+              <IconWave />
             </span>
             <span>Full Stack Developer</span>
           </div>
@@ -207,31 +176,11 @@ export default function Home() {
           <div className="about__content">
 
             <div className="about__photo-container">
-              <div className="about__photo-frame">
-                <img
-                  key={aboutCarouselPhotos[aboutPhotoIndex]}
-                  src={aboutCarouselPhotos[aboutPhotoIndex]}
-                  alt="Foto de Octávio Augusto"
-                  className="about__photo about__photo--carousel"
-                />
-              </div>
-
-              <div
-                className="about__photo-indicators"
-                style={{ '--carousel-duration': `${ABOUT_CAROUSEL_INTERVAL_MS}ms` }}
-                aria-label="Indicadores do carrossel de fotos"
-              >
-                {aboutCarouselPhotos.map((_, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    className={`about__photo-indicator${index === aboutPhotoIndex ? ' about__photo-indicator--active' : ''}`}
-                    onClick={() => setAboutPhotoIndex(index)}
-                    aria-label={`Mostrar foto ${index + 1}`}
-                    aria-current={index === aboutPhotoIndex ? 'true' : undefined}
-                  />
-                ))}
-              </div>
+              <img
+                src={asset('/assets/svg/eu-fund-branco-de-preto.svg')}
+                alt="Foto de Octávio Augusto"
+                className="about__photo"
+              />
 
               <div className="about__content-qualifications" style={{ marginTop: '4rem' }}>
                 <h3 className="about__content-title">Formação Acadêmica</h3>
