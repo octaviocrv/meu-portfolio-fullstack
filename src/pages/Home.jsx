@@ -137,6 +137,31 @@ export default function Home() {
     return () => window.clearInterval(intervalId)
   }, [])
 
+  useEffect(() => {
+    const revealEls = document.querySelectorAll('.about .reveal')
+    if (revealEls.length === 0) return undefined
+
+    if (typeof IntersectionObserver === 'undefined') {
+      revealEls.forEach((el) => el.classList.add('is-visible'))
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
+    )
+
+    revealEls.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
       <Header />
@@ -197,7 +222,7 @@ export default function Home() {
       {/* ABOUT */}
       <section id="about" className="about sec-pad">
         <div className="main-container">
-          <h2 className="heading heading-sec heading-sec__mb-med">
+          <h2 className="heading heading-sec heading-sec__mb-med reveal">
             <span className="heading-sec__main">Sobre mim</span>
             <span className="heading-sec__sub">
               Conheça um pouco mais sobre minha trajetória e minhas habilidades.
@@ -206,7 +231,7 @@ export default function Home() {
 
           <div className="about__content">
 
-            <div className="about__photo-container">
+            <div className="about__photo-container reveal reveal--d1">
               <div className="about__photo-frame">
                 <img
                   key={aboutCarouselPhotos[aboutPhotoIndex]}
@@ -273,7 +298,7 @@ export default function Home() {
             </div>
 
             <div className="about__info-container">
-              <div className="about__content-main">
+              <div className="about__content-main reveal reveal--d2">
                 <h3 className="about__content-title">Muito prazer!</h3>
                 <div className="about__content-details">
                   <p className="about__content-details-para">
@@ -288,12 +313,12 @@ export default function Home() {
                     Sinta-se à vontade para entrar em <strong>contato</strong> comigo.
                   </p>
                 </div>
-                <a href="#contact" className="btn btn--med btn--theme dynamicBgClr">
-                  Contato
+                <a href="#contact" className="btn btn--med btn--theme dynamicBgClr about__cta-btn">
+                  Contato <IconArrow />
                 </a>
               </div>
 
-              <div className="about__content-skills" style={{ marginTop: '6rem' }}>
+              <div className="about__content-skills reveal reveal--d3" style={{ marginTop: '6rem' }}>
                 <h3 className="about__content-title">Habilidades & Tecnologias</h3>
 
                 {/* SKILLS */}
