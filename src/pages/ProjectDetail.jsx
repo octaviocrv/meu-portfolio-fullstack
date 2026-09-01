@@ -1,10 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 export default function ProjectDetail({ project }) {
   const highlightSentence =
     'Por ser um projeto empresarial sob NDA e em produção, o código-fonte não está disponível publicamente.';
+
+  // entrada suave ao rolar — só tem efeito visual no mobile (ver .reveal-m no CSS)
+  useEffect(() => {
+    const revealEls = document.querySelectorAll('.reveal-m');
+    if (revealEls.length === 0) return undefined;
+
+    if (typeof IntersectionObserver === 'undefined') {
+      revealEls.forEach((el) => el.classList.add('is-visible'));
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
+    );
+
+    revealEls.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   const renderOverviewText = (text) => {
     if (typeof text !== 'string') return text;
@@ -45,13 +71,14 @@ export default function ProjectDetail({ project }) {
               src={project.image}
               alt={`Demonstração do projeto ${project.title}`}
               className="project-details__showcase-img"
+              decoding="async"
             />
           </div>
 
           <div className="project-details__grid">
             
             <div className="project-details__main-col">
-              <div className="project-details__section">
+              <div className="project-details__section reveal-m">
                 <h3 className="project-details__content-title">Visão Geral do Projeto</h3>
                 <div className="project-details__desc">
                   {project.overview.map((para, i) => (
@@ -63,11 +90,11 @@ export default function ProjectDetail({ project }) {
               </div>
 
               {Array.isArray(project.challenges) && project.challenges.length > 0 && (
-                <div className="project-details__section">
+                <div className="project-details__section reveal-m">
                   <h3 className="project-details__content-title">Principais Desafios & Soluções</h3>
                   <div className="project-details__challenges-grid">
                     {project.challenges.map((challenge, i) => (
-                      <div key={challenge.title || i} className="project-details__challenge-card">
+                      <div key={challenge.title || i} className="project-details__challenge-card reveal-m">
                         <h4 className="project-details__challenge-title">{challenge.title}</h4>
                         <p className="project-details__challenge-desc">{challenge.solution}</p>
                       </div>
@@ -79,8 +106,12 @@ export default function ProjectDetail({ project }) {
 
             <div className="project-details__side-col">
               
-              <div className="project-details__side-card">
+              <div className="project-details__side-card reveal-m">
                 <h3 className="project-details__content-title project-details__content-title--sm">Ferramentas Utilizadas</h3>
+                <p className="mobile-swipe-hint">
+                  <span>Deslize para ver todas as ferramentas</span>
+                  <span className="mobile-swipe-hint__arrow" aria-hidden="true">→</span>
+                </p>
                 <div className="project-details__tech-list">
                   {project.tools.map((tool) => (
                     <span key={tool} className="project-details__tech-pill">
@@ -92,7 +123,7 @@ export default function ProjectDetail({ project }) {
 
               {/* Bloco de ações agora está condicionado */}
               {(project.liveLink || project.codeLink) && (
-                <div className="project-details__side-card">
+                <div className="project-details__side-card reveal-m">
                   <h3 className="project-details__content-title project-details__content-title--sm">Ações</h3>
                   <div className="project-details__links-container">
                     {project.liveLink && (

@@ -25,6 +25,8 @@ export default function Footer() {
                     src={s.icon}
                     alt="icon"
                     className={`main-footer__icon${s.last ? ' main-footer__icon--mr-none' : ''}`}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </a>
               ))}

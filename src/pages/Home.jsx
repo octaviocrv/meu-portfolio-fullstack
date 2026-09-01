@@ -2,7 +2,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { projectsData } from '../data/projects'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const baseUrl = import.meta.env.BASE_URL
 const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
@@ -138,9 +138,140 @@ const contactMarqueeItems = [
   'Bora criar algo incrível',
 ]
 
+// Carrossel lateral com autoplay para mobile (skills, projetos, contato).
+// Em telas desktop (acima de CAROUSEL_MEDIA_QUERY) o hook fica totalmente
+// inativo — nada de listeners, autoplay ou scroll programático — então o
+// layout desktop (grid normal) não é afetado.
+const CAROUSEL_MEDIA_QUERY = '(max-width: 700px)'
+const CAROUSEL_AUTOPLAY_MS = 4000
+const CAROUSEL_RESUME_DELAY_MS = 5000
+
+function useSwipeCarousel(containerRef, itemCount) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const autoplayIdRef = useRef(null)
+  const resumeIdRef = useRef(null)
+
+  const scrollToIndex = (index) => {
+    const container = containerRef.current
+    const child = container?.children?.[index]
+    if (!container || !child) return
+    const targetLeft =
+      child.getBoundingClientRect().left -
+      container.getBoundingClientRect().left +
+      container.scrollLeft
+    container.scrollTo({ left: targetLeft, behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container || itemCount === 0) return undefined
+
+    const breakpointQuery = window.matchMedia(CAROUSEL_MEDIA_QUERY)
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    let scrollRaf = null
+    let teardown = () => {}
+
+    const stopAutoplay = () => {
+      if (autoplayIdRef.current) {
+        window.clearInterval(autoplayIdRef.current)
+        autoplayIdRef.current = null
+      }
+    }
+
+    const startAutoplay = () => {
+      stopAutoplay()
+      if (reduceMotionQuery.matches) return
+      autoplayIdRef.current = window.setInterval(() => {
+        setActiveIndex((prev) => {
+          const next = (prev + 1) % itemCount
+          scrollToIndex(next)
+          return next
+        })
+      }, CAROUSEL_AUTOPLAY_MS)
+    }
+
+    const pauseForInteraction = () => {
+      stopAutoplay()
+      if (resumeIdRef.current) window.clearTimeout(resumeIdRef.current)
+      resumeIdRef.current = window.setTimeout(startAutoplay, CAROUSEL_RESUME_DELAY_MS)
+    }
+
+    const syncActiveIndexFromScroll = () => {
+      const children = Array.from(container.children)
+      if (children.length === 0) return
+      const containerLeft = container.getBoundingClientRect().left
+      let closestIndex = 0
+      let closestDistance = Infinity
+      children.forEach((child, index) => {
+        const distance = Math.abs(child.getBoundingClientRect().left - containerLeft)
+        if (distance < closestDistance) {
+          closestDistance = distance
+          closestIndex = index
+        }
+      })
+      setActiveIndex(closestIndex)
+    }
+
+    const handleScroll = () => {
+      if (scrollRaf) return
+      scrollRaf = window.requestAnimationFrame(() => {
+        syncActiveIndexFromScroll()
+        scrollRaf = null
+      })
+    }
+
+    const setup = () => {
+      teardown()
+      if (!breakpointQuery.matches) {
+        teardown = () => {}
+        return
+      }
+
+      startAutoplay()
+      container.addEventListener('touchstart', pauseForInteraction, { passive: true })
+      container.addEventListener('scroll', handleScroll, { passive: true })
+
+      teardown = () => {
+        stopAutoplay()
+        if (resumeIdRef.current) window.clearTimeout(resumeIdRef.current)
+        if (scrollRaf) window.cancelAnimationFrame(scrollRaf)
+        container.removeEventListener('touchstart', pauseForInteraction)
+        container.removeEventListener('scroll', handleScroll)
+      }
+    }
+
+    setup()
+    breakpointQuery.addEventListener('change', setup)
+
+    return () => {
+      breakpointQuery.removeEventListener('change', setup)
+      teardown()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemCount])
+
+  return { activeIndex, scrollToIndex }
+}
+
 export default function Home() {
   const [aboutPhotoIndex, setAboutPhotoIndex] = useState(0)
   const [emailCopied, setEmailCopied] = useState(false)
+  const aboutPhotoTouchStartXRef = useRef(null)
+
+  const skillsCarouselRef = useRef(null)
+  const projectsCarouselRef = useRef(null)
+  const contactCarouselRef = useRef(null)
+
+  useSwipeCarousel(skillsCarouselRef, skills.length)
+  const { activeIndex: activeProjectIndex, scrollToIndex: scrollToProject } = useSwipeCarousel(
+    projectsCarouselRef,
+    projectsData.length - 1
+  )
+  const { activeIndex: activeContactIndex, scrollToIndex: scrollToContact } = useSwipeCarousel(
+    contactCarouselRef,
+    3
+  )
 
   const handleCopyEmail = async () => {
     try {
@@ -150,6 +281,26 @@ export default function Home() {
     } catch {
       // clipboard indisponível — o link de e-mail continua funcionando normalmente
     }
+  }
+
+  // swipe por toque no carrossel de fotos (mobile) — desktop usa apenas os indicadores
+  const handleAboutPhotoTouchStart = (e) => {
+    aboutPhotoTouchStartXRef.current = e.touches[0].clientX
+  }
+
+  const handleAboutPhotoTouchEnd = (e) => {
+    const startX = aboutPhotoTouchStartXRef.current
+    aboutPhotoTouchStartXRef.current = null
+    if (startX === null) return
+
+    const deltaX = e.changedTouches[0].clientX - startX
+    const SWIPE_THRESHOLD = 40
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD) return
+
+    const direction = deltaX < 0 ? 1 : -1
+    setAboutPhotoIndex(
+      (prev) => (prev + direction + aboutCarouselPhotos.length) % aboutCarouselPhotos.length
+    )
   }
 
   useEffect(() => {
@@ -255,7 +406,11 @@ export default function Home() {
           <div className="about__content">
 
             <div className="about__photo-container reveal reveal--d1">
-              <div className="about__photo-frame">
+              <div
+                className="about__photo-frame"
+                onTouchStart={handleAboutPhotoTouchStart}
+                onTouchEnd={handleAboutPhotoTouchEnd}
+              >
                 <img
                   key={aboutCarouselPhotos[aboutPhotoIndex]}
                   src={aboutCarouselPhotos[aboutPhotoIndex]}
@@ -291,6 +446,7 @@ export default function Home() {
                         alt={`Logo ${qual.institution}`}
                         className="qualifications__icon"
                         loading="lazy"
+                        decoding="async"
                       />
                       <div className="qualifications__text">
                         <p className="qualifications__degree">{qual.degree}</p>
@@ -310,6 +466,7 @@ export default function Home() {
                       alt="Ícone idioma Inglês"
                       className="qualifications__icon"
                       loading="lazy"
+                      decoding="async"
                     />
                     <div className="qualifications__text">
                       <p className="qualifications__degree">Inglês</p>
@@ -355,8 +512,13 @@ export default function Home() {
               <div className="about__content-skills reveal reveal--d3" style={{ marginTop: '6rem' }}>
                 <h3 className="about__content-title">Especialidades</h3>
 
+                <p className="mobile-swipe-hint">
+                  <span>Deslize para ver todas as habilidades</span>
+                  <span className="mobile-swipe-hint__arrow" aria-hidden="true">→</span>
+                </p>
+
                 {/* SKILLS */}
-                <div className="skills">
+                <div className="skills" ref={skillsCarouselRef}>
                   {skills.map((skill) => (
                     <div
                       key={skill.name}
@@ -394,6 +556,7 @@ export default function Home() {
                   alt={projectsData[0].title}
                   className="projects__featured-img"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
 
@@ -447,8 +610,13 @@ export default function Home() {
             </article>
           )}
 
+          <p className="mobile-swipe-hint mobile-swipe-hint--projects">
+            <span>Deslize para ver todos os projetos</span>
+            <span className="mobile-swipe-hint__arrow" aria-hidden="true">→</span>
+          </p>
+
           {/* GRID — demais projetos */}
-          <div className="projects__grid">
+          <div className="projects__grid" ref={projectsCarouselRef}>
             {projectsData.slice(1).map((project, index) => (
               <article
                 key={project.id}
@@ -463,6 +631,7 @@ export default function Home() {
                     alt={project.title}
                     className="projects__card-img"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="projects__card-body">
@@ -513,6 +682,20 @@ export default function Home() {
                   </div>
                 </div>
               </article>
+            ))}
+          </div>
+
+          <div className="mobile-carousel-dots" role="tablist" aria-label="Selecionar projeto">
+            {projectsData.slice(1).map((project, index) => (
+              <button
+                key={project.id}
+                type="button"
+                role="tab"
+                className={`mobile-carousel-dot${index === activeProjectIndex ? ' mobile-carousel-dot--active' : ''}`}
+                onClick={() => scrollToProject(index)}
+                aria-label={`Ver projeto: ${project.title}`}
+                aria-selected={index === activeProjectIndex}
+              />
             ))}
           </div>
         </div>
@@ -570,7 +753,25 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="contact__quick">
+            <div className="contact__quick" ref={contactCarouselRef}>
+              <button
+                type="button"
+                className="contact__card contact__card--email reveal reveal--d1"
+                onClick={handleCopyEmail}
+                onMouseMove={handleImageSpotlight}
+              >
+                <div className="contact__card-body">
+                  <div className="contact__card-icon email">
+                    {emailCopied ? <IconCheck /> : <IconEmail />}
+                  </div>
+                  <h3 className="contact__card-title">Email</h3>
+                  <p className="contact__card-desc">{emailCopied ? 'E-mail copiado!' : CONTACT_EMAIL}</p>
+                  <span className="contact__card-link">
+                    {emailCopied ? 'Copiado' : 'Copiar e-mail'} {emailCopied ? <IconCheck /> : <IconCopy />}
+                  </span>
+                </div>
+              </button>
+
               <a
                 href="https://wa.me/5531989184698?text=Olá!%20Gostaria%20de%20falar%20sobre%20um%20projeto."
                 target="_blank"
@@ -606,6 +807,20 @@ export default function Home() {
                   <span className="contact__card-link">Conectar <IconArrow /></span>
                 </div>
               </a>
+            </div>
+
+            <div className="mobile-carousel-dots mobile-carousel-dots--contact" role="tablist" aria-label="Selecionar forma de contato">
+              {['Email', 'WhatsApp', 'LinkedIn'].map((label, index) => (
+                <button
+                  key={label}
+                  type="button"
+                  role="tab"
+                  className={`mobile-carousel-dot${index === activeContactIndex ? ' mobile-carousel-dot--active' : ''}`}
+                  onClick={() => scrollToContact(index)}
+                  aria-label={`Ver contato: ${label}`}
+                  aria-selected={index === activeContactIndex}
+                />
+              ))}
             </div>
           </div>
         </div>

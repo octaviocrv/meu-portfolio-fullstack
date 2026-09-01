@@ -2739,3 +2739,506 @@ textarea:focus {
   }
 
 }
+
+
+/* ============================================================
+   18. MOBILE EXPERIENCE REDESIGN (NOVO)
+   Tudo abaixo é exclusivo de telas pequenas e/ou dispositivos
+   de toque. Nenhuma regra aqui altera a versão desktop:
+   - blocos `@media (max-width: ...)` só disparam abaixo do
+     breakpoint indicado;
+   - blocos `@media (hover: none) and (pointer: coarse)` só
+     disparam em dispositivos sem hover de mouse (touch);
+   - classes novas (.mobile-swipe-hint, .reveal-m) têm estado
+     "neutro" (idêntico a não existir) fora desses contextos.
+   ============================================================ */
+
+/* --- 18.1 Classes base neutras em qualquer viewport ≥ breakpoint --- */
+
+.mobile-swipe-hint {
+  display: none;
+}
+
+.reveal-m {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- 18.2 Header — área de toque do burger --- */
+
+@media (max-width: 37.5em) {
+  .header__burger {
+    position: relative;
+  }
+
+  .header__burger::before {
+    content: '';
+    position: absolute;
+    inset: -1.3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .header__sm-menu-content {
+    padding: 0 2.6rem;
+  }
+
+  .header__sm-menu-link a {
+    padding: 1.8rem 0;
+    font-size: 2rem;
+  }
+}
+
+/* --- 18.3 Hero — dica de rolagem para toque --- */
+
+@media (max-width: 600px) {
+  .home-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 2.2rem;
+    left: 50%;
+    z-index: 2;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-right: 2px solid rgba(255, 255, 255, 0.55);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.55);
+    transform: translateX(-50%) rotate(45deg);
+    animation: heroScrollCueMobile 1.8s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes heroScrollCueMobile {
+  0%,
+  100% {
+    transform: translateX(-50%) rotate(45deg) translateY(0);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translateX(-50%) rotate(45deg) translateY(7px);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) and (prefers-reduced-motion: reduce) {
+  .home-hero::after {
+    animation: none;
+  }
+}
+
+/* --- 18.4 Sobre mim — carrossel de habilidades + toque --- */
+
+@media (max-width: 600px) {
+  .mobile-swipe-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1.4rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #0062b9;
+    opacity: 0.85;
+  }
+
+  .mobile-swipe-hint__arrow {
+    display: inline-block;
+    animation: swipeHintNudge 1.6s ease-in-out infinite;
+  }
+
+  /* Fix: itens de grid têm min-width:auto por padrão, então o conteúdo
+     "nowrap" do carrossel de skills (abaixo) forçava a coluna inteira do
+     grid — e a foto, que divide a mesma trilha — a estourar para fora da
+     tela. min-width:0 permite que a coluna encolha corretamente. */
+  .about__photo-container,
+  .about__info-container {
+    min-width: 0;
+  }
+
+  .about__content-main {
+    padding: 2.6rem 2.2rem;
+    border-radius: 1.6rem;
+  }
+
+  .about__content-qualifications {
+    margin-top: 2.6rem !important;
+  }
+
+  .about__content-skills {
+    margin-top: 3.4rem !important;
+  }
+
+  .about__photo-indicators {
+    gap: 1.4rem;
+    padding: 0.9rem 1.2rem;
+  }
+
+  .about__photo-indicator {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .about__photo-indicator--active {
+    width: 4.2rem;
+  }
+
+  .skills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.4rem 0.2rem 1.2rem;
+    margin: 0 -0.2rem;
+    mask-image: linear-gradient(to right, #000 0, #000 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 0, #000 90%, transparent 100%);
+  }
+
+  .skills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skills__skill {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+}
+
+@keyframes swipeHintNudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+@media (max-width: 600px) and (prefers-reduced-motion: reduce) {
+  .mobile-swipe-hint__arrow {
+    animation: none;
+  }
+}
+
+/* --- 18.5 Projetos — carrossel horizontal com "peek" --- */
+
+@media (max-width: 700px) {
+  .projects__grid {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1.6rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 1.6rem;
+    mask-image: linear-gradient(to right, #000 0, #000 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 0, #000 88%, transparent 100%);
+  }
+
+  .projects__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .projects__card {
+    flex: 0 0 84%;
+    max-width: 84%;
+    scroll-snap-align: start;
+  }
+
+  .projects__featured-body {
+    padding: 2.6rem 2.2rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .projects__card {
+    flex: 0 0 88%;
+    max-width: 88%;
+  }
+}
+
+/* --- 18.5b Marcadores (dots) dos carrosséis com autoplay --- */
+/* usado pelo carrossel de projetos e pelo carrossel de contato (JS em Home.jsx) */
+
+.mobile-carousel-dots {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .mobile-carousel-dots {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    margin-top: 0.4rem;
+  }
+
+  .mobile-carousel-dot {
+    position: relative;
+    width: 0.9rem;
+    height: 0.9rem;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(0, 98, 185, 0.24);
+    transition: width 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .mobile-carousel-dot::before {
+    content: '';
+    position: absolute;
+    inset: -1rem;
+  }
+
+  .mobile-carousel-dot--active {
+    width: 2.6rem;
+    background: #0062b9;
+  }
+
+  .mobile-carousel-dots--contact .mobile-carousel-dot {
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  .mobile-carousel-dots--contact .mobile-carousel-dot--active {
+    background: #60b3ff;
+  }
+}
+
+@media (max-width: 700px) and (prefers-reduced-motion: reduce) {
+  .mobile-carousel-dot {
+    transition: none;
+  }
+}
+
+/* --- 18.6 Página de projeto — carrossel de ferramentas --- */
+
+@media (max-width: 600px) {
+  /* Mesmo fix de min-width:0 do item 18.4 — .project-details__grid também é
+     um CSS grid, e .side-col é item dele; sem isso o carrossel de
+     ferramentas abaixo estouraria a coluna para fora da tela. */
+  .project-details__main-col,
+  .project-details__side-col {
+    min-width: 0;
+  }
+
+  .project-details__tech-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.2rem 0.2rem 0.8rem;
+    margin: 0 -0.2rem;
+    mask-image: linear-gradient(to right, #000 0, #000 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 0, #000 90%, transparent 100%);
+  }
+
+  .project-details__tech-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .project-details__tech-pill {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+
+  .project-details__challenge-card {
+    padding: 2.2rem 2rem;
+  }
+
+  .project-details__side-card {
+    padding: 2.6rem 2.2rem;
+  }
+}
+
+/* --- 18.7 Animação de entrada ao rolar (mobile) --- */
+
+@media (max-width: 700px) {
+  .reveal-m {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .reveal-m.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 700px) and (prefers-reduced-motion: reduce) {
+  .reveal-m {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* --- 18.8 Contato — carrossel de 3 cards (Email, WhatsApp, LinkedIn) --- */
+
+.contact__card--email {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  /* no mobile os 3 métodos de contato viram cards do carrossel — o bloco
+     de assinatura (que já mostra o e-mail em destaque) fica redundante */
+  .contact__signature {
+    display: none;
+  }
+
+  .contact__card--email {
+    display: flex;
+    width: 100%;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .contact__card-icon.email {
+    color: #60b3ff;
+  }
+
+  .contact__quick {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1.6rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.4rem;
+    mask-image: linear-gradient(to right, #000 0, #000 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 0, #000 88%, transparent 100%);
+  }
+
+  .contact__quick::-webkit-scrollbar {
+    display: none;
+  }
+
+  .contact__quick .contact__card {
+    flex: 0 0 84%;
+    max-width: 84%;
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 420px) {
+  .contact__quick .contact__card {
+    flex: 0 0 88%;
+    max-width: 88%;
+  }
+}
+
+/* --- 18.8b Contato e Footer — toque confortável --- */
+
+@media (max-width: 380px) {
+  .contact__card {
+    padding: 2.8rem 2rem;
+  }
+
+  .contact__signature {
+    padding: 2.2rem 1.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-footer__social-cont a {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .main-footer__social-cont a::before {
+    content: '';
+    position: absolute;
+    inset: -1.2rem;
+  }
+}
+
+/* --- 18.9 Microinterações de toque --- */
+
+@media (hover: none) and (pointer: coarse) {
+  .btn:active,
+  .home-hero__cta-btn:active,
+  .projects__btn-primary:active,
+  .project-details__btn-full:active,
+  .contact__copy-btn:active {
+    transform: scale(0.96);
+    transition: transform 0.15s ease;
+  }
+
+  .projects__card:active {
+    transform: scale(0.98);
+  }
+
+  .projects__featured:active {
+    transform: scale(0.99);
+  }
+
+  .contact__card:active {
+    transform: scale(0.97);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .skills__skill:active,
+  .project-details__tech-pill:active {
+    transform: scale(0.94);
+  }
+
+  .qualifications__item:active {
+    background-color: rgba(0, 98, 185, 0.08);
+  }
+
+  .header__link--cta:active,
+  .header__sm-menu-link a:active {
+    opacity: 0.75;
+  }
+
+  .about__photo-indicator:active,
+  .mobile-carousel-dot:active {
+    transform: scale(1.15);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) and (prefers-reduced-motion: reduce) {
+  .btn:active,
+  .home-hero__cta-btn:active,
+  .projects__btn-primary:active,
+  .project-details__btn-full:active,
+  .contact__copy-btn:active,
+  .projects__card:active,
+  .projects__featured:active,
+  .contact__card:active,
+  .skills__skill:active,
+  .project-details__tech-pill:active,
+  .about__photo-indicator:active,
+  .mobile-carousel-dot:active {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* --- 18.10 Performance — custo de blur reduzido em telas pequenas --- */
+
+@media (max-width: 600px) {
+  .about::before,
+  .about::after,
+  .projects::before,
+  .projects::after {
+    filter: blur(40px);
+  }
+
+  .contact__orb--1,
+  .contact__orb--2 {
+    filter: blur(50px);
+  }
+}
