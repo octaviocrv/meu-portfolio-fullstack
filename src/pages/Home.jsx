@@ -2,28 +2,20 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { projectsData } from '../data/projects'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 const baseUrl = import.meta.env.BASE_URL
 const asset = (path) => `${baseUrl}${path.replace(/^\//, '')}`
 
 const skills = [
-  { name: 'JavaScript', type: 'tech' },
-  { name: 'Resolução de Problemas', type: 'soft' },
-
-  { name: 'React', type: 'tech' },
-  { name: 'Comunicação Clara', type: 'soft' },
-
-  { name: 'Node.js', type: 'tech' },
-  { name: 'Entrega no Prazo', type: 'soft' },
-
-  { name: 'REST APIs', type: 'tech' },
-  { name: 'Adaptabilidade', type: 'soft' },
-
-  { name: 'Automação', type: 'tech' },
-  { name: 'Integração de Sistemas', type: 'tech' },
-
-  { name: 'Landing Pages', type: 'tech' },
-  { name: 'Performance Web', type: 'tech' },
+  { name: 'Desenvolvimento de Plataformas', type: 'hard' },
+  { name: 'Soluções Web Personalizadas', type: 'soft' },
+  { name: 'Integração de Sistemas', type: 'hard' },
+  { name: 'Automação de Processos', type: 'soft' },
+  { name: 'APIs & Serviços', type: 'hard' },
+  { name: 'Arquitetura de Software', type: 'soft' },
+  { name: 'Desenvolvimento Full Stack', type: 'hard' },
+  { name: 'Performance & Escalabilidade', type: 'hard' },
 ];
 
 const qualifications = [
@@ -46,6 +38,13 @@ const socialIcons = [
   // { src: '/assets/png/yt-ico.png', href: '#' },
   { src: asset('/assets/png/insta-ico.png'), href: 'https://www.instagram.com/octaviocrv', last: true },
 ]
+
+const aboutCarouselPhotos = [
+  asset('/assets/svg/eu-fund-branco-de-preto.svg'),
+  asset('/assets/svg/eu-fundo-branco-cruzado-preto.svg'),
+]
+
+const ABOUT_CAROUSEL_INTERVAL_MS = 10000
 
 
 const IconExternal = () => (
@@ -78,11 +77,24 @@ const IconCheck = () => (
   </svg>
 )
 
-const IconWave = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M8 11V5a2 2 0 1 1 4 0v6" />
-    <path d="M12 11V4a2 2 0 1 1 4 0v7" />
-    <path d="M16 11V6a2 2 0 1 1 4 0v8c0 3.3-2.7 6-6 6h-2.2a6 6 0 0 1-5-2.7L4 13.5a2 2 0 1 1 3.2-2.4L8 12" />
+const IconLaptop = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect x="3" y="4" width="18" height="12" rx="1.6" stroke="currentColor" strokeWidth="2" />
+    <path
+      d="M2.4 18.4h19.2l-1.1 1.9a1.6 1.6 0 0 1-1.38.8H4.88a1.6 1.6 0 0 1-1.38-.8l-1.1-1.9z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinejoin="round"
+    />
+    <path
+      className="badge-icon__code"
+      d="M8.6 8.3 6.4 10l2.2 1.7M15.4 8.3l2.2 1.7-2.2 1.7"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <rect className="badge-icon__cursor" x="11.3" y="9" width="1.4" height="3.4" rx="0.4" fill="currentColor" />
   </svg>
 )
 
@@ -105,7 +117,74 @@ const IconEmail = () => (
   </svg>
 )
 
+const IconCopy = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="9" y="9" width="13" height="13" rx="2" />
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+  </svg>
+)
+
+const handleImageSpotlight = (e) => {
+  const rect = e.currentTarget.getBoundingClientRect()
+  e.currentTarget.style.setProperty('--mx', `${((e.clientX - rect.left) / rect.width) * 100}%`)
+  e.currentTarget.style.setProperty('--my', `${((e.clientY - rect.top) / rect.height) * 100}%`)
+}
+
+const CONTACT_EMAIL = 'octavio.peregrino80@gmail.com'
+
+const contactMarqueeItems = [
+  'Vamos conversar',
+  'Disponível para novos projetos',
+  'Bora criar algo incrível',
+]
+
 export default function Home() {
+  const [aboutPhotoIndex, setAboutPhotoIndex] = useState(0)
+  const [emailCopied, setEmailCopied] = useState(false)
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(CONTACT_EMAIL)
+      setEmailCopied(true)
+      window.setTimeout(() => setEmailCopied(false), 2000)
+    } catch {
+      // clipboard indisponível — o link de e-mail continua funcionando normalmente
+    }
+  }
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setAboutPhotoIndex((prev) => (prev + 1) % aboutCarouselPhotos.length)
+    }, ABOUT_CAROUSEL_INTERVAL_MS)
+
+    return () => window.clearInterval(intervalId)
+  }, [])
+
+  useEffect(() => {
+    const revealEls = document.querySelectorAll('.reveal')
+    if (revealEls.length === 0) return undefined
+
+    if (typeof IntersectionObserver === 'undefined') {
+      revealEls.forEach((el) => el.classList.add('is-visible'))
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -60px 0px' }
+    )
+
+    revealEls.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
       <Header />
@@ -116,7 +195,7 @@ export default function Home() {
 
           <div className="home-hero__badge animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             <span className="home-hero__badge-icon" aria-hidden="true">
-              <IconWave />
+              <IconLaptop />
             </span>
             <span>Full Stack Developer</span>
           </div>
@@ -166,7 +245,7 @@ export default function Home() {
       {/* ABOUT */}
       <section id="about" className="about sec-pad">
         <div className="main-container">
-          <h2 className="heading heading-sec heading-sec__mb-med">
+          <h2 className="heading heading-sec heading-sec__mb-med reveal">
             <span className="heading-sec__main">Sobre mim</span>
             <span className="heading-sec__sub">
               Conheça um pouco mais sobre minha trajetória e minhas habilidades.
@@ -175,12 +254,32 @@ export default function Home() {
 
           <div className="about__content">
 
-            <div className="about__photo-container">
-              <img
-                src={asset('/assets/svg/eu-fund-branco-de-preto.svg')}
-                alt="Foto de Octávio Augusto"
-                className="about__photo"
-              />
+            <div className="about__photo-container reveal reveal--d1">
+              <div className="about__photo-frame">
+                <img
+                  key={aboutCarouselPhotos[aboutPhotoIndex]}
+                  src={aboutCarouselPhotos[aboutPhotoIndex]}
+                  alt="Foto de Octávio Augusto"
+                  className="about__photo about__photo--carousel"
+                />
+              </div>
+
+              <div
+                className="about__photo-indicators"
+                style={{ '--carousel-duration': `${ABOUT_CAROUSEL_INTERVAL_MS}ms` }}
+                aria-label="Indicadores do carrossel de fotos"
+              >
+                {aboutCarouselPhotos.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className={`about__photo-indicator${index === aboutPhotoIndex ? ' about__photo-indicator--active' : ''}`}
+                    onClick={() => setAboutPhotoIndex(index)}
+                    aria-label={`Mostrar foto ${index + 1}`}
+                    aria-current={index === aboutPhotoIndex ? 'true' : undefined}
+                  />
+                ))}
+              </div>
 
               <div className="about__content-qualifications" style={{ marginTop: '4rem' }}>
                 <h3 className="about__content-title">Formação Acadêmica</h3>
@@ -222,28 +321,39 @@ export default function Home() {
             </div>
 
             <div className="about__info-container">
-              <div className="about__content-main">
+              <div className="about__content-main reveal reveal--d2">
                 <h3 className="about__content-title">Muito prazer!</h3>
+                <div className="about__badges">
+                  <span className="about__badge">📍 Belo Horizonte</span>
+                  <span className="about__badge">⚙️ Integrações & Automação</span>
+                  <span className="about__badge">💻 Web & Sistemas</span>
+                  <span className="about__badge">🧩 Resolvedor de problemas</span>
+                  <span className="about__badge">🧠 IA & Automação Inteligente</span>
+                </div>
                 <div className="about__content-details">
                   <p className="about__content-details-para">
-                    Sou um <strong>resolvedor de problemas</strong> e busco sempre transformar desafios em soluções digitais. Com base em Belo Horizonte (MG), tenho sólida experiência em desenvolvimento/integrações e entendo como conectar regras de negócio a interfaces que realmente funcionam. Possuo projetos próprios desenvolvidos desde o MVP até a implementação.
+                    Hoje, atuo diretamente na interseção entre tecnologia e resolução de problemas, <strong>transformando necessidades reais</strong> em soluções digitais funcionais, bem estruturadas e pensadas para gerar valor.
                   </p>
 
                   <p className="about__content-details-para">
-                    Além do desenvolvimento web tradicional, também crio integrações e automações utilizando ferramentas para otimizar processos.
+                    Com base em <strong>Belo Horizonte (MG)</strong>, desenvolvo projetos próprios desde a concepção até a implementação, unindo visão de negócio, experiência do usuário e tecnologia para construir soluções que façam sentido na prática.
                   </p>
 
                   <p className="about__content-details-para">
-                    Sinta-se à vontade para entrar em <strong>contato</strong> comigo.
+                    Mais do que desenvolver, busco compreender o contexto, identificar o que realmente precisa ser resolvido e encontrar uma abordagem eficiente para cada desafio.
+                  </p>
+
+                  <p className="about__content-details-para">
+                    <strong>Tem um projeto ou uma ideia? Vamos conversar.</strong>
                   </p>
                 </div>
-                <a href="#contact" className="btn btn--med btn--theme dynamicBgClr">
-                  Contato
+                <a href="#contact" className="btn btn--med btn--theme dynamicBgClr about__cta-btn">
+                  Contato <IconArrow />
                 </a>
               </div>
 
-              <div className="about__content-skills" style={{ marginTop: '6rem' }}>
-                <h3 className="about__content-title">Habilidades & Tecnologias</h3>
+              <div className="about__content-skills reveal reveal--d3" style={{ marginTop: '6rem' }}>
+                <h3 className="about__content-title">Especialidades</h3>
 
                 {/* SKILLS */}
                 <div className="skills">
@@ -268,7 +378,7 @@ export default function Home() {
       {/* PROJECTS */}
       <section id="projects" className="projects sec-pad">
         <div className="main-container">
-          <h2 className="heading heading-sec heading-sec__mb-bg">
+          <h2 className="heading heading-sec heading-sec__mb-bg reveal">
             <span className="heading-sec__main">Projetos</span>
             <span className="heading-sec__sub">
               Uma seleção dos meus principais projetos, do planejamento à entrega final.
@@ -277,8 +387,8 @@ export default function Home() {
 
           {/* DESTAQUE — primeiro projeto */}
           {projectsData[0] && (
-            <article className="projects__featured">
-              <div className="projects__featured-img-cont">
+            <article className="projects__featured reveal">
+              <div className="projects__featured-img-cont" onMouseMove={handleImageSpotlight}>
                 <img
                   src={projectsData[0].image}
                   alt={projectsData[0].title}
@@ -339,9 +449,15 @@ export default function Home() {
 
           {/* GRID — demais projetos */}
           <div className="projects__grid">
-            {projectsData.slice(1).map((project) => (
-              <article key={project.id} className="projects__card">
-                <div className="projects__card-img-cont">
+            {projectsData.slice(1).map((project, index) => (
+              <article
+                key={project.id}
+                className={`projects__card reveal reveal--d${(index % 3) + 1}`}
+              >
+                <div className="projects__card-img-cont" onMouseMove={handleImageSpotlight}>
+                  <span className="projects__card-index" aria-hidden="true">
+                    {String(index + 2).padStart(2, '0')}
+                  </span>
                   <img
                     src={project.image}
                     alt={project.title}
@@ -403,55 +519,105 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="contact sec-pad dynamicBg">
-        <div className="main-container">
-          <h2 className="heading-sec__main heading-sec__main--lt">Vamos Conversar?</h2>
-          <span className="heading-sec__sub heading-sec__sub--lt">
-            Seja para discutir arquitetura front-end, integrações de automação ou uma nova oportunidade, escolha a melhor forma de falar comigo.
-          </span>
+      <section id="contact" className="contact sec-pad">
+        <div className="contact__bg" aria-hidden="true">
+          <span className="contact__orb contact__orb--1"></span>
+          <span className="contact__orb contact__orb--2"></span>
+          <span className="contact__grid-overlay"></span>
+          <span className="contact__ghost-text">Contato</span>
+        </div>
 
-          <div className="contact__cards-container">
+        <div className="main-container contact__container">
+          <div className="contact__intro reveal">
+            <span className="contact__status">
+              <span className="contact__status-dot" aria-hidden="true"></span>
+              Disponível para novos projetos
+            </span>
 
-            <a
-              href="https://wa.me/5531989184698?text=Olá!%20Gostaria%20de%20falar%20sobre%20um%20projeto."
-              target="_blank"
-              rel="noreferrer"
-              className="contact__card"
-            >
-              <div className="contact__card-icon whatsapp">
-                <IconWhatsapp />
+            <h2 className="contact__heading">
+              Vamos <span className="text-highlight">conversar</span>?
+            </h2>
+            <span className="contact__subtitle">
+              Seja para discutir arquitetura front-end, integrações de automação ou uma nova oportunidade, escolha a melhor forma de falar comigo.
+            </span>
+          </div>
+
+          <div className="contact__layout">
+            <div className="contact__signature reveal reveal--d1">
+              <div className="contact__signature-text">
+                <span className="contact__signature-label">Prefere o direto ao ponto?</span>
+                <a href={`mailto:${CONTACT_EMAIL}`} className="contact__signature-link">
+                  <IconEmail />
+                  <span>{CONTACT_EMAIL}</span>
+                  <IconArrow />
+                </a>
               </div>
-              <h3 className="contact__card-title">WhatsApp</h3>
-              <p className="contact__card-desc">Me chame para um papo rápido e direto.</p>
-              <span className="contact__card-link">Enviar mensagem &rarr;</span>
-            </a>
 
-            <a
-              href="https://www.linkedin.com/in/octaviocrv"
-              target="_blank"
-              rel="noreferrer"
-              className="contact__card"
-            >
-              <div className="contact__card-icon linkedin">
-                <IconLinkedin />
+              <div className="contact__signature-actions">
+                <button
+                  type="button"
+                  className={`contact__copy-btn${emailCopied ? ' contact__copy-btn--done' : ''}`}
+                  onClick={handleCopyEmail}
+                >
+                  {emailCopied ? <IconCheck /> : <IconCopy />}
+                  <span>{emailCopied ? 'Copiado!' : 'Copiar e-mail'}</span>
+                </button>
+
+                <div className="contact__meta">
+                  <span className="contact__meta-item">📍 Belo Horizonte, MG</span>
+                  <span className="contact__meta-item">⏱️ Resposta em até 24h</span>
+                </div>
               </div>
-              <h3 className="contact__card-title">LinkedIn</h3>
-              <p className="contact__card-desc">Acompanhe minha trajetória e conexões.</p>
-              <span className="contact__card-link">Conectar &rarr;</span>
-            </a>
+            </div>
 
-            <a
-              href="mailto:octavio.peregrino80@gmail.com"
-              className="contact__card"
-            >
-              <div className="contact__card-icon email">
-                <IconEmail />
-              </div>
-              <h3 className="contact__card-title">E-mail</h3>
-              <p className="contact__card-desc">Para propostas e assuntos mais detalhados.</p>
-              <span className="contact__card-link">Escrever e-mail &rarr;</span>
-            </a>
+            <div className="contact__quick">
+              <a
+                href="https://wa.me/5531989184698?text=Olá!%20Gostaria%20de%20falar%20sobre%20um%20projeto."
+                target="_blank"
+                rel="noreferrer"
+                className="contact__card reveal reveal--d2"
+                onMouseMove={handleImageSpotlight}
+              >
+                <span className="contact__card-index" aria-hidden="true">01</span>
+                <div className="contact__card-body">
+                  <div className="contact__card-icon whatsapp">
+                    <IconWhatsapp />
+                  </div>
+                  <h3 className="contact__card-title">WhatsApp</h3>
+                  <p className="contact__card-desc">Me chame para um papo rápido e direto.</p>
+                  <span className="contact__card-link">Enviar mensagem <IconArrow /></span>
+                </div>
+              </a>
 
+              <a
+                href="https://www.linkedin.com/in/octaviocrv"
+                target="_blank"
+                rel="noreferrer"
+                className="contact__card reveal reveal--d3"
+                onMouseMove={handleImageSpotlight}
+              >
+                <span className="contact__card-index" aria-hidden="true">02</span>
+                <div className="contact__card-body">
+                  <div className="contact__card-icon linkedin">
+                    <IconLinkedin />
+                  </div>
+                  <h3 className="contact__card-title">LinkedIn</h3>
+                  <p className="contact__card-desc">Acompanhe minha trajetória e conexões.</p>
+                  <span className="contact__card-link">Conectar <IconArrow /></span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="contact__marquee" aria-hidden="true">
+          <div className="contact__marquee-track">
+            {[...contactMarqueeItems, ...contactMarqueeItems].map((item, i) => (
+              <span className="contact__marquee-item" key={i}>
+                {item}
+                <span className="contact__marquee-dot">✦</span>
+              </span>
+            ))}
           </div>
         </div>
       </section>
